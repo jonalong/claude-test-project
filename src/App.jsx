@@ -106,7 +106,16 @@ export default function App() {
 
   async function handleCopy() {
     if (!result) return
-    await navigator.clipboard.writeText(result.text)
+    try {
+      await navigator.clipboard.writeText(result.text)
+    } catch {
+      const el = document.createElement('textarea')
+      el.value = result.text
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+    }
     setCopied(true)
     setTimeout(() => setCopied(false), 1800)
   }
@@ -124,7 +133,7 @@ export default function App() {
     const resultLabel = [result.tone, suffix].filter(Boolean).join(' · ')
 
     return (
-      <div className="min-h-screen bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="min-h-screen bg-white flex flex-col max-w-[375px] mx-auto relative">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
         <div className="flex-1 flex flex-col gap-9 p-5 overflow-y-auto">
@@ -149,8 +158,8 @@ export default function App() {
               <p className="text-[10px] font-semibold leading-[14px] text-[#ff3967]">{resultLabel}</p>
               <p className="text-[13px] font-semibold leading-[18px] text-[#414752]">순화된 문장</p>
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="bg-white border border-[#d1d4d8] rounded-xl px-4 py-5">
+            <div className="flex flex-col gap-[10px]">
+              <div className="bg-white border border-[#e3e4e6] rounded-xl px-4 py-6">
                 <p className="text-[16px] font-medium leading-[23px] text-[#121212] whitespace-pre-wrap">{result.text}</p>
               </div>
               <button
@@ -159,11 +168,15 @@ export default function App() {
               >
                 <img src={icCopy} alt="" className="size-4" />
                 <span className="text-[14px] font-semibold leading-[16px] text-[#ff3967]">
-                  {copied ? '복사됨 ✓' : '복사하기'}
+                  {copied ? '복사완료' : '복사하기'}
                 </span>
               </button>
             </div>
           </div>
+        </div>
+
+        <div className={`absolute bottom-[88px] left-1/2 -translate-x-1/2 bg-[#121212] text-white text-[14px] font-medium px-4 py-3 rounded-lg whitespace-nowrap pointer-events-none transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0'}`}>
+          ✓　클립보드에 복사되었습니다
         </div>
 
         <div className="px-5 pb-5 pt-3 shrink-0">
