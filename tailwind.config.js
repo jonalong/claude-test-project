@@ -1,6 +1,6 @@
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
-const { theme: designTheme } = require('./tailwind.theme.json')
+const { theme: designTheme } = require('./design/tailwind.theme.json')
 
 /** @type {import('tailwindcss').Config} */
 export default {
