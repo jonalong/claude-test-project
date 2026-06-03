@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import logoText from './assets/logo-text.svg'
 import logoIcon from './assets/logo-icon.svg'
 import icCopy from './assets/ic-copy.svg'
@@ -12,15 +12,42 @@ const CONTEXT_SUFFIX = {
   '기타': null,
 }
 const MAX_CHARS = 500
+const TOOLTIP_TEXT = '해당 프로젝트는 조나롱이 클로드와 함께 테스트로 진행해 보았으며, 킹받는 모든 직장인을 위로하는 마음으로 제작되었습니다'
 
-function AppBar() {
+function AppBar({ showTooltip, onToggleTooltip }) {
+  const tooltipRef = useRef(null)
+
+  useEffect(() => {
+    if (!showTooltip) return
+    function handleOutside(e) {
+      if (tooltipRef.current && !tooltipRef.current.contains(e.target)) {
+        onToggleTooltip(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutside)
+    return () => document.removeEventListener('mousedown', handleOutside)
+  }, [showTooltip, onToggleTooltip])
+
   return (
-    <header className="h-14 flex items-center justify-between px-4 shrink-0">
+    <header className="h-14 flex items-center justify-between px-4 shrink-0 relative">
       <div className="relative h-7 w-[162px]">
         <img alt="" src={logoIcon} className="absolute size-[22.7px] top-[2.3px] left-[3.5px]" />
         <img alt="Cotton Bat" src={logoText} className="absolute h-[19.8px] w-[129.6px] top-[3.7px] left-[29.9px]" />
       </div>
-      <button className="size-6 flex items-center justify-center text-[#414752] text-[18px]" type="button">ⓘ</button>
+      <div className="relative" ref={tooltipRef}>
+        <button
+          type="button"
+          onClick={() => onToggleTooltip(!showTooltip)}
+          className="size-6 flex items-center justify-center text-[#414752] text-[18px]"
+        >
+          ⓘ
+        </button>
+        {showTooltip && (
+          <div className="absolute right-0 top-8 w-[260px] bg-[#2d333b] text-white text-[12px] leading-[18px] rounded-xl px-4 py-3 z-10 shadow-lg">
+            {TOOLTIP_TEXT}
+          </div>
+        )}
+      </div>
     </header>
   )
 }
@@ -49,6 +76,7 @@ export default function App() {
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
 
   async function handleSubmit(e) {
     if (e) e.preventDefault()
@@ -97,7 +125,7 @@ export default function App() {
 
     return (
       <div className="min-h-screen bg-white flex flex-col max-w-[375px] mx-auto">
-        <AppBar />
+        <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
         <div className="flex-1 flex flex-col gap-9 p-5 overflow-y-auto">
           <div className="flex flex-col gap-1.5">
@@ -122,7 +150,7 @@ export default function App() {
               <p className="text-[13px] font-semibold leading-[18px] text-[#414752]">순화된 문장</p>
             </div>
             <div className="flex flex-col gap-2">
-              <div className="bg-[#f8f8f9] border border-[#efeff1] rounded-xl px-4 py-5">
+              <div className="bg-white border border-[#d1d4d8] rounded-xl px-4 py-5">
                 <p className="text-[16px] font-medium leading-[23px] text-[#121212] whitespace-pre-wrap">{result.text}</p>
               </div>
               <button
@@ -153,7 +181,7 @@ export default function App() {
   // 입력 화면
   return (
     <div className="min-h-screen bg-white flex flex-col max-w-[375px] mx-auto">
-      <AppBar />
+      <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
       <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-9 p-5 overflow-y-auto">
         <div className="flex flex-col gap-1.5">
@@ -173,7 +201,6 @@ export default function App() {
                 <Chip key={t} label={t} selected={tone === t} onClick={() => setTone(t)} />
               ))}
             </div>
-            <p className="text-[12px] text-[#b5b8bc]">단축키: Ctrl + Enter 로 바로 변환</p>
           </div>
 
           <div className="flex flex-col gap-2">
