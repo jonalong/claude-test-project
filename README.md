@@ -1,23 +1,26 @@
-# Cotton Bat 🥊
+# Cotton Bat 🦇
 
 킹받는 직장인을 위한 말 순화 서비스. 거친 문장을 정중하고 건설적인 표현으로 바꿔드립니다.
 
 > 조나롱이 클로드와 함께 테스트로 진행한 프로젝트입니다.
+
+🔗 **라이브 서비스**: https://claude-test-project-d2b26.web.app
 
 ## 기능
 
 - 비속어·인신공격 표현을 정중한 언어로 자동 변환
 - 톤 강도 선택: 정중 / 부드럽게 / 단호+예의 / 짧게
 - 상황 프리셋: 직장 상사 / 직장 동료 / 외부 고객 / 기타
-- 결과 클립보드 복사
+- 결과 클립보드 복사 (토스트 알림 포함)
 
 ## 기술 스택
 
 - **Frontend**: React 18, Vite, Tailwind CSS
-- **Backend**: Node.js, Express
+- **Backend**: Firebase Cloud Functions v2 (Node.js + Express)
 - **AI**: Claude Haiku (Anthropic API)
+- **배포**: Firebase Hosting + Firebase Functions (Blaze 플랜)
 
-## 시작하기
+## 로컬 개발
 
 ### 1. 의존성 설치
 
@@ -49,3 +52,13 @@ npm run dev
 | `npm run client` | Vite 개발 서버만 실행 |
 | `npm run server` | Express API 서버만 실행 |
 | `npm run build` | 프로덕션 빌드 |
+
+## 배포
+
+Firebase Hosting + Cloud Functions으로 배포됩니다. `main` 브랜치에 push하면 GitHub Actions를 통해 자동 배포됩니다.
+
+```bash
+# 수동 배포
+npm run build
+firebase deploy --force
+```
