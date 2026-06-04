@@ -10,55 +10,74 @@ app.use(express.json())
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 const TONE_PROMPT = {
-  '정중': '매우 정중하고 격식 있게',
+  '정중한 톤': '매우 정중하고 격식 있게',
   '부드럽게': '부드럽고 따뜻하게',
   '단호+예의': '단호하지만 예의 바르게',
-  '짧게': '핵심만 간결하고 짧게',
+  '간결하게': '핵심만 간결하고 짧게',
+  '애교 톤': '귀엽고 애교스럽게',
+  '이모지톤😊': '이모지를 적절히 사용하여 친근하게',
+  '상사 보고체': '상사에게 보고하는 격식 있는 어체로',
+  '다정한 선배체': '다정하고 따뜻한 선배처럼',
 }
 
-const CONTEXT_PROMPT = {
-  '직장 상사': '직장 상사에게 보내는 메시지로 적합하게',
-  '직장 동료': '직장 동료에게 보내는 메시지로 적합하게',
-  '외부 고객': '외부 고객에게 보내는 비즈니스 메시지로 적합하게',
-  '기타': '',
-}
+const STABLE_SYSTEM = [
+  '당신은 사용자가 입력한 문장을 순화하여 JSON으로만 반환하는 문장 변환기입니다.',
+  '핵심 임무: 입력된 문장을 순화하여 다시 쓰는 것입니다. 절대로 입력에 대한 답변이나 반응을 생성하지 마십시오.',
+  '',
+  '반드시 아래 JSON 형식으로만 출력하세요. JSON 이외 다른 텍스트는 절대 포함하지 마세요:',
+  '{"refined":"순화된 문장","scoreBefore":원문_분노점수(0~100),"scoreAfter":순화문_분노점수(0~100),"level":"등급명","comment":"한 줄 위트 코멘트"}',
+  '',
+  'scoreBefore 등급 기준 (점수에 맞는 등급명 그대로 사용):',
+  '0-9: 평온 그 자체 😇 / 10-19: 살짝 뾰로통 🙂 / 20-29: 까칠 주의보 😏 / 30-39: 부글 시작 😤',
+  '40-49: 욱! 😠 / 50-59: 뚜껑 들썩 🌶️ / 60-69: 활활 모드 🔥 / 70-79: 이성 가출 🥵',
+  '80-89: 눈 돌아감 🌋 / 90-100: 핵불닭급 ☢️',
+  '',
+  '규칙:',
+  '1. 비속어·인신공격·비하 표현을 모두 제거한다.',
+  '2. 입력 문장의 핵심 감정과 의도를 유지하여 순화된 표현으로 재작성한다.',
+  '3. 명령·질책을 정중한 요청과 사실 기반 표현으로 바꾼다.',
+  '4. 절대로 입력에 대한 답변, 위로, 조언, 반응을 하지 않는다.',
+  '5. 한국어 매너에 맞는 자연스러운 어투를 사용한다.',
+  '6. refined 필드에 순화된 문장만 담고, 부연 설명은 하지 않는다.',
+].join('\n')
 
 app.post('/api/purify', async (req, res) => {
-  const { text, tone = '정중하게', context = '기타' } = req.body
+  const { text, tone = '정중한 톤' } = req.body
 
   if (!text?.trim()) {
     return res.status(400).json({ error: '텍스트를 입력해주세요.' })
   }
 
-  const toneDesc = TONE_PROMPT[tone] ?? '정중하게'
-  const contextDesc = CONTEXT_PROMPT[context] ?? ''
-
-  const systemPrompt = [
-    '당신은 사용자가 입력한 문장을 그대로 다듬어 출력하는 문장 변환기입니다.',
-    '핵심 임무: 입력된 문장을 순화하여 다시 쓰는 것입니다. 절대로 입력에 대한 답변이나 반응을 생성하지 마십시오.',
-    '예시:',
-    "- 입력: '나라 망한듯 족됐당' → 출력: '현재 나라 상황이 정말 걱정됩니다.'",
-    "- 입력: '왜 연락이 안되냐 씨발놈아' → 출력: '연락이 잘 되지 않아 걱정이 됩니다. 편한 시간에 연락 부탁드립니다.'",
-    '규칙:',
-    '1. 비속어·인신공격·비하 표현을 모두 제거한다.',
-    '2. 입력 문장의 핵심 감정과 의도를 유지하여 순화된 표현으로 재작성한다.',
-    '3. 명령·질책을 정중한 요청과 사실 기반 표현으로 바꾼다.',
-    '4. 절대로 입력에 대한 답변, 위로, 조언, 반응을 하지 않는다.',
-    `5. ${toneDesc} 어투를 사용한다.`,
-    contextDesc ? `6. ${contextDesc}.` : '',
-    '7. 한국어 비즈니스 매너에 맞는 자연스러운 어투를 사용한다.',
-    '8. 순화된 문장만 출력하고, 부연 설명은 하지 않는다.',
-  ].filter(Boolean).join('\n')
+  const toneDesc = TONE_PROMPT[tone] ?? '정중하고 격식 있게'
+  const dynamicRule = `말투: ${toneDesc} 어투로 순화할 것`
 
   try {
     const message = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
-      system: systemPrompt,
+      system: STABLE_SYSTEM + '\n' + dynamicRule,
       messages: [{ role: 'user', content: text }],
     })
 
-    res.json({ result: message.content[0].text })
+    const raw = message.content[0].text.trim()
+    let parsed
+
+    try {
+      // JSON 코드블록 감싸진 경우 대응
+      const jsonMatch = raw.match(/```json\s*([\s\S]*?)\s*```/) || raw.match(/({[\s\S]*})/)
+      parsed = JSON.parse(jsonMatch ? jsonMatch[1] : raw)
+    } catch {
+      // 파싱 실패 시 텍스트를 refined로 폴백
+      parsed = {
+        refined: raw,
+        scoreBefore: 50,
+        scoreAfter: 10,
+        level: '욱! 😠',
+        comment: '변환이 완료되었어요.',
+      }
+    }
+
+    res.json(parsed)
   } catch (err) {
     console.error('Claude API error:', err.message)
     res.status(500).json({ error: '변환에 실패했습니다.' })
