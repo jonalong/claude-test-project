@@ -103,7 +103,7 @@ export default function App() {
   // ── 1단계: 분출 입력 ──────────────────────────────
   if (step === 'input') {
     return (
-      <div className="h-screen bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
         <div className="flex-1 flex flex-col gap-11 pt-6 pb-10 px-5 overflow-y-auto">
@@ -150,7 +150,7 @@ export default function App() {
   // ── 2단계: 말투 선택 ──────────────────────────────
   if (step === 'tone') {
     return (
-      <div className="h-screen bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
         <div className="flex-1 flex flex-col gap-[52px] pt-6 pb-10 px-5 overflow-y-auto">
@@ -203,7 +203,7 @@ export default function App() {
   // ── 3단계: 로딩 ──────────────────────────────────
   if (step === 'loading') {
     return (
-      <div className="h-screen bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
         <div className="flex-1 flex flex-col items-center justify-center gap-8 pb-20 px-5">
           <img
@@ -232,7 +232,7 @@ export default function App() {
     const comment = result.comment ?? ''
 
     return (
-      <div className="h-screen bg-white flex flex-col max-w-[375px] mx-auto relative">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto relative">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
         <div className="flex-1 flex flex-col gap-7 pt-6 pb-5 px-5 overflow-y-auto">
