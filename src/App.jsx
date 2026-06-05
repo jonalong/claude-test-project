@@ -3,7 +3,7 @@ import logoText from './assets/logo-text.svg'
 import logoIcon from './assets/logo-icon.svg'
 import icCopy from './assets/ic-copy.svg'
 
-const TONES = ['정중한 톤', '부드럽게', '단호+예의', '간결하게', '애교 톤', '이모지톤😊', '상사 보고체', '다정한 선배체']
+const TONES = ['정중하게', '부드럽게', '단호+예의', '애교', '유머러스', '담백하게', '다정하게', '프로페셔널']
 const MAX_CHARS = 500
 const TOOLTIP_TEXT = '해당 프로젝트는 조나롱이 클로드와 함께 테스트로 진행해 보았으며, 킹받는 모든 직장인을 위로하는 마음으로 제작되었습니다'
 
@@ -48,7 +48,7 @@ function AppBar({ showTooltip, onToggleTooltip }) {
 export default function App() {
   const [step, setStep] = useState('input') // 'input' | 'tone' | 'loading' | 'result'
   const [text, setText] = useState('')
-  const [tone, setTone] = useState('정중한 톤')
+  const [tone, setTone] = useState('정중하게')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
@@ -95,7 +95,7 @@ export default function App() {
     setResult(null)
     setError('')
     setText('')
-    setTone('정중한 톤')
+    setTone('정중하게')
     setCopied(false)
     setStep('input')
   }
