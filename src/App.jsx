@@ -189,8 +189,8 @@ export default function App() {
           </div>
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#f8f8f9] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+          <div className="w-full max-w-[375px] px-5 pb-5 pt-3 bg-white">
             <button
               onClick={() => text.trim() && setStep('tone')}
               className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
