@@ -55,26 +55,60 @@ export default function App() {
   const [showTooltip, setShowTooltip] = useState(false)
   const ctaRef = useRef(null)
 
-  // visualViewport 직접 DOM 조작 — React re-render 없이 transform으로 GPU 합성
+  // CTA 버튼 키보드 추적 — React re-render 없이 직접 DOM transform 조작
   useEffect(() => {
     const el = ctaRef.current
-    const vv = window.visualViewport
-    if (!el || !vv) return
+    if (!el) return
 
     function update() {
-      const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+      const vv = window.visualViewport
+      // vv 없으면(구형 브라우저) window.innerHeight 기준 fallback
+      const kb = vv
+        ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+        : 0
       el.style.transform = `translateY(-${kb}px)`
     }
 
-    vv.addEventListener('resize', update, { passive: true })
-    vv.addEventListener('scroll', update, { passive: true })
+    // 1) visualViewport 이벤트 (iOS Safari, 최신 WebView)
+    const vv = window.visualViewport
+    if (vv) {
+      vv.addEventListener('resize', update, { passive: true })
+      vv.addEventListener('scroll', update, { passive: true })
+    }
+
+    // 2) window resize fallback (Android WebView 일부)
+    window.addEventListener('resize', update, { passive: true })
+
+    // 3) 키보드 애니메이션 구간 rAF 폴링
+    //    iOS/카카오/인스타 인앱 브라우저는 focusin 시점에
+    //    resize 이벤트가 늦거나 누락됨 → 600ms 동안 60fps로 직접 계산
+    let rafId = null
+    function startPolling() {
+      if (rafId) cancelAnimationFrame(rafId)
+      const deadline = Date.now() + 600
+      function poll() {
+        update()
+        if (Date.now() < deadline) rafId = requestAnimationFrame(poll)
+      }
+      rafId = requestAnimationFrame(poll)
+    }
+
+    document.addEventListener('focusin', startPolling)
+    document.addEventListener('focusout', startPolling)
+
     update()
 
     return () => {
-      vv.removeEventListener('resize', update)
-      vv.removeEventListener('scroll', update)
+      if (vv) {
+        vv.removeEventListener('resize', update)
+        vv.removeEventListener('scroll', update)
+      }
+      window.removeEventListener('resize', update)
+      document.removeEventListener('focusin', startPolling)
+      document.removeEventListener('focusout', startPolling)
+      if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [step]) // step 변경 시 새 DOM 엘리먼트에 재바인딩
+  }, [step])
 
   async function handleSubmit() {
     if (!text.trim()) return
