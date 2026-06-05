@@ -3,11 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-  html,
+  html {
+    background-color: #f8f8f9;
+    overflow: hidden;
+  }
+
   body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #ffffff;
+    background-color: #f8f8f9;
     color: #121212;
     -webkit-font-smoothing: antialiased;
+    /* iOS 오버스크롤 바운스 시 body 배경 노출 방지 */
+    overscroll-behavior: none;
+    overflow: hidden;
   }
 }
