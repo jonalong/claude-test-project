@@ -189,7 +189,7 @@ export default function App() {
           </div>
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10" style={{ willChange: 'transform' }}>
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
           <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
             <button
               onClick={() => text.trim() && setStep('tone')}
@@ -240,7 +240,7 @@ export default function App() {
           {error && <p className="text-[13px] text-[#ff3967]">{error}</p>}
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10" style={{ willChange: 'transform' }}>
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
           <div className="w-full max-w-[375px] px-5 pb-5 pt-3 flex gap-2">
             <button
               onClick={() => setStep('input')}
