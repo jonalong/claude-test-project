@@ -106,7 +106,7 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
-        <div className="flex-1 flex flex-col gap-11 pt-6 pb-10 px-5 overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-11 pt-6 pb-24 px-5 overflow-y-auto">
           <div className="flex flex-col gap-1.5">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               분노의 말을<br />여기에 다 쏟아내세요
@@ -133,15 +133,17 @@ export default function App() {
           </div>
         </div>
 
-        <div className="px-5 pb-5 pt-3 shrink-0">
-          <button
-            onClick={() => text.trim() && setStep('tone')}
-            className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
-              text.trim() ? 'bg-[#ff3967] text-white active:bg-[#ef1447]' : 'bg-[#e3e4e6] text-[#b5b8bc]'
-            }`}
-          >
-            다음 단계
-          </button>
+        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+          <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
+            <button
+              onClick={() => text.trim() && setStep('tone')}
+              className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
+                text.trim() ? 'bg-[#ff3967] text-white active:bg-[#ef1447]' : 'bg-[#e3e4e6] text-[#b5b8bc]'
+              }`}
+            >
+              다음 단계
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -153,7 +155,7 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
-        <div className="flex-1 flex flex-col gap-[52px] pt-6 pb-10 px-5 overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-[52px] pt-6 pb-24 px-5 overflow-y-auto">
           <div className="flex flex-col gap-1.5">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               어떤 스타일로<br />다듬어 드릴까요?
@@ -182,19 +184,21 @@ export default function App() {
           {error && <p className="text-[13px] text-[#ff3967]">{error}</p>}
         </div>
 
-        <div className="px-5 pb-5 pt-3 shrink-0 flex gap-2">
-          <button
-            onClick={() => setStep('input')}
-            className="h-12 px-6 border border-[#ff3967] rounded-xl text-[16px] font-semibold text-[#ff3967] transition-colors active:bg-[#fff0f3] shrink-0"
-          >
-            뒤로가기
-          </button>
-          <button
-            onClick={handleSubmit}
-            className="flex-1 h-12 bg-[#ff3967] rounded-xl text-white text-[16px] font-semibold active:bg-[#ef1447] transition-colors"
-          >
-            순화하기
-          </button>
+        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+          <div className="w-full max-w-[375px] px-5 pb-5 pt-3 flex gap-2">
+            <button
+              onClick={() => setStep('input')}
+              className="h-12 px-6 border border-[#ff3967] rounded-xl text-[16px] font-semibold text-[#ff3967] transition-colors active:bg-[#fff0f3] shrink-0"
+            >
+              뒤로가기
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="flex-1 h-12 bg-[#ff3967] rounded-xl text-white text-[16px] font-semibold active:bg-[#ef1447] transition-colors"
+            >
+              순화하기
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -235,12 +239,12 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto relative">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} />
 
-        <div className="flex-1 flex flex-col gap-7 pt-6 pb-5 px-5 overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-7 pt-6 pb-24 px-5 overflow-y-auto">
 
           {/* 헤딩 + 분노 게이지 카드 */}
           <div className="flex flex-col gap-5">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
-              {level} 분노를<br />진정시켜 봤어요
+              {level} 분노를 진정시켜 봤어요
             </h3>
 
             <div className="bg-[#121212] rounded-2xl px-5 pt-5 pb-6 flex flex-col gap-3">
@@ -326,13 +330,15 @@ export default function App() {
           ✓　클립보드에 복사되었습니다
         </div>
 
-        <div className="px-5 pb-5 pt-3 shrink-0">
-          <button
-            onClick={handleReset}
-            className="w-full h-12 bg-[#ff3967] text-white text-[16px] font-semibold rounded-xl active:bg-[#ef1447] transition-colors"
-          >
-            다시하기
-          </button>
+        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+          <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
+            <button
+              onClick={handleReset}
+              className="w-full h-12 bg-[#ff3967] text-white text-[16px] font-semibold rounded-xl active:bg-[#ef1447] transition-colors"
+            >
+              다시하기
+            </button>
+          </div>
         </div>
       </div>
     )
