@@ -45,6 +45,30 @@ function AppBar({ showTooltip, onToggleTooltip }) {
   )
 }
 
+function useKeyboardOffset() {
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+
+    function update() {
+      // 키보드가 올라온 만큼 bottom 값을 올려준다
+      const keyboardHeight = Math.max(0, window.innerHeight - vv.height - vv.offsetTop)
+      setOffset(keyboardHeight)
+    }
+
+    vv.addEventListener('resize', update)
+    vv.addEventListener('scroll', update)
+    return () => {
+      vv.removeEventListener('resize', update)
+      vv.removeEventListener('scroll', update)
+    }
+  }, [])
+
+  return offset
+}
+
 export default function App() {
   const [step, setStep] = useState('input') // 'input' | 'tone' | 'loading' | 'result'
   const [text, setText] = useState('')
@@ -53,6 +77,7 @@ export default function App() {
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
+  const keyboardOffset = useKeyboardOffset()
 
   async function handleSubmit() {
     if (!text.trim()) return
@@ -133,7 +158,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+        <div className="fixed left-0 right-0 flex justify-center bg-white z-10" style={{ bottom: `${keyboardOffset}px` }}>
           <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
             <button
               onClick={() => text.trim() && setStep('tone')}
@@ -184,7 +209,7 @@ export default function App() {
           {error && <p className="text-[13px] text-[#ff3967]">{error}</p>}
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+        <div className="fixed left-0 right-0 flex justify-center bg-white z-10" style={{ bottom: `${keyboardOffset}px` }}>
           <div className="w-full max-w-[375px] px-5 pb-5 pt-3 flex gap-2">
             <button
               onClick={() => setStep('input')}
@@ -330,7 +355,7 @@ export default function App() {
           ✓　클립보드에 복사되었습니다
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white z-10">
+        <div className="fixed left-0 right-0 flex justify-center bg-white z-10" style={{ bottom: `${keyboardOffset}px` }}>
           <div className="w-full max-w-[375px] px-5 pb-5 pt-3">
             <button
               onClick={handleReset}
