@@ -159,7 +159,7 @@ export default function App() {
   // ── 1단계: 분출 입력 ──────────────────────────────
   if (step === 'input') {
     return (
-      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
         <div className="flex-1 flex flex-col gap-11 pt-6 pb-24 px-5 overflow-y-auto">
@@ -190,7 +190,7 @@ export default function App() {
         </div>
 
         <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#f8f8f9] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[375px] px-5 pb-5 pt-3 bg-white">
+          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white">
             <button
               onClick={() => text.trim() && setStep('tone')}
               className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
@@ -208,7 +208,7 @@ export default function App() {
   // ── 2단계: 말투 선택 ──────────────────────────────
   if (step === 'tone') {
     return (
-      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
         <div className="flex-1 flex flex-col gap-[52px] pt-6 pb-24 px-5 overflow-y-auto">
@@ -241,7 +241,7 @@ export default function App() {
         </div>
 
         <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#f8f8f9] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[375px] px-5 pb-5 pt-3 flex gap-2 bg-white">
+          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 flex gap-2 bg-white">
             <button
               onClick={() => setStep('input')}
               className="h-12 px-6 border border-[#ff3967] rounded-xl text-[16px] font-semibold text-[#ff3967] transition-colors active:bg-[#fff0f3] shrink-0"
@@ -263,7 +263,7 @@ export default function App() {
   // ── 3단계: 로딩 ──────────────────────────────────
   if (step === 'loading') {
     return (
-      <div className="h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
         <div className="flex-1 flex flex-col items-center justify-center gap-8 pb-20 px-5">
           <img
@@ -292,7 +292,7 @@ export default function App() {
     const comment = result.comment ?? ''
 
     return (
-      <div className="min-h-[100dvh] bg-white flex flex-col max-w-[375px] mx-auto">
+      <div className="min-h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
         <div className="flex-1 flex flex-col gap-7 pt-6 pb-10 px-5">
