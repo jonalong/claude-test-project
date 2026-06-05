@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  html,
   body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #f8f8f9;
+    background-color: #ffffff;
     color: #121212;
     -webkit-font-smoothing: antialiased;
   }
