@@ -162,7 +162,7 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
-        <div className="flex-1 flex flex-col gap-10 pt-6 pb-24 px-5 overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-10 pt-6 px-5 overflow-y-auto" style={{ paddingBottom: 'calc(76px + 16px + env(safe-area-inset-bottom, 0px))' }}>
           <div className="flex flex-col gap-[10px]">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               분노의 말을<br />여기에 다 쏟아내세요
@@ -188,8 +188,8 @@ export default function App() {
           </div>
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white w-full max-w-[460px]">
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform' }}>
+          <div className="w-full max-w-[460px] px-5 pt-3 bg-white" style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))' }}>
             <button
               onClick={() => text.trim() && setStep('tone')}
               className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
@@ -210,7 +210,7 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
-        <div className="flex-1 flex flex-col gap-10 pt-6 pb-24 px-5 overflow-y-auto">
+        <div className="flex-1 flex flex-col gap-10 pt-6 px-5 overflow-y-auto" style={{ paddingBottom: 'calc(76px + 16px + env(safe-area-inset-bottom, 0px))' }}>
           <div className="flex flex-col gap-[10px]">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               어떤 스타일로<br />다듬어 드릴까요?
@@ -239,8 +239,8 @@ export default function App() {
           {error && <p className="text-[13px] text-[#ff3967]">{error}</p>}
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white flex gap-2">
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform' }}>
+          <div className="w-full max-w-[460px] px-5 pt-3 bg-white flex gap-2" style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))' }}>
             <button
               onClick={() => setStep('input')}
               className="h-12 px-6 border border-[#ff3967] rounded-xl text-[16px] font-semibold text-[#ff3967] transition-colors active:bg-[#fff0f3] shrink-0"
