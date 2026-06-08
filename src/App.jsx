@@ -3,7 +3,7 @@ import logoText from './assets/logo-text.svg'
 import logoIcon from './assets/logo-icon.svg'
 import icCopy from './assets/ic-copy.svg'
 
-const TONES = ['정중한 톤', '부드럽게', '단호+예의', '간결하게', '애교 톤', '유머러스😊', '상사 보고체', '다정한 선배체', '프로패셔널']
+const TONES = ['정중한 톤', '부드럽게', '단호+예의', '간결하게', '애교 톤😝', '유머러스😊', '상사 보고체', '다정한 선배체', '프로패셔널']
 const MAX_CHARS = 500
 const TOOLTIP_TEXT = '해당 프로젝트는 조나롱이 클로드와 함께 테스트로 진행해 보았으며, 킹받는 모든 직장인을 위로하는 마음으로 제작되었습니다'
 
