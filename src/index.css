@@ -5,7 +5,7 @@
 @layer base {
   html {
     background-color: #EBECED;
-    overflow: hidden;
+    height: 100%;
   }
 
   body {
@@ -13,8 +13,8 @@
     background-color: #EBECED;
     color: #121212;
     -webkit-font-smoothing: antialiased;
-    /* iOS 오버스크롤 바운스 시 body 배경 노출 방지 */
     overscroll-behavior: none;
-    overflow: hidden;
+    height: 100%;
+    overflow-y: auto;
   }
 }
