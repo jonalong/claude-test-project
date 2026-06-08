@@ -3,7 +3,7 @@ import logoText from './assets/logo-text.svg'
 import logoIcon from './assets/logo-icon.svg'
 import icCopy from './assets/ic-copy.svg'
 
-const TONES = ['정중하게', '부드럽게', '단호+예의', '애교', '유머러스', '담백하게', '다정하게', '프로페셔널']
+const TONES = ['정중한 톤', '부드럽게', '단호+예의', '간결하게', '애교 톤', '유머러스😊', '상사 보고체', '다정한 선배체', '프로패셔널']
 const MAX_CHARS = 500
 const TOOLTIP_TEXT = '해당 프로젝트는 조나롱이 클로드와 함께 테스트로 진행해 보았으며, 킹받는 모든 직장인을 위로하는 마음으로 제작되었습니다'
 
@@ -22,7 +22,7 @@ function AppBar({ showTooltip, onToggleTooltip, onLogoClick }) {
   }, [showTooltip, onToggleTooltip])
 
   return (
-    <header className="h-14 flex items-center justify-between px-4 shrink-0 relative">
+    <header className="h-14 flex items-center justify-between px-4 shrink-0 relative bg-white">
       <div
         className="relative h-7 w-[162px] cursor-pointer"
         onClick={onLogoClick}
@@ -162,21 +162,20 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
-        <div className="flex-1 flex flex-col gap-11 pt-6 pb-24 px-5 overflow-y-auto">
-          <div className="flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-10 pt-6 pb-24 px-5 overflow-y-auto">
+          <div className="flex flex-col gap-[10px]">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               분노의 말을<br />여기에 다 쏟아내세요
             </h3>
-            <p className="text-[12px] font-medium leading-[16px] text-[#797d86]">
+            <p className="text-[14px] font-medium leading-[16px] text-[#797d86]">
               검열하지 말고 막 적으시면 정중하게 바꿔드릴게요
             </p>
           </div>
 
-          <div className="flex flex-col gap-1.5 flex-1">
-            <p className="text-[13px] font-semibold leading-[18px] text-[#414752]">원문 입력</p>
-            <div className="border border-[#e3e4e6] rounded-xl p-4 flex flex-col justify-between min-h-[300px] focus-within:border-[#ff3967] transition-colors">
+          <div className="flex flex-col flex-1">
+            <div className="bg-white border border-[#e3e4e6] rounded-xl p-4 flex flex-col justify-between min-h-[300px] focus-within:border-[#ff3967] transition-colors">
               <textarea
-                className="flex-1 w-full resize-none outline-none text-[16px] leading-[23px] text-[#121212] placeholder-[#b5b8bc] bg-transparent"
+                className="flex-1 w-full resize-none outline-none text-[22px] leading-[32px] text-[#121212] placeholder-[#b5b8bc] bg-transparent"
                 placeholder="예시) 일정도 똑바로 못 맞추냐? 덜떨어진 놈아 다시 해와"
                 value={text}
                 onChange={e => setText(e.target.value.slice(0, MAX_CHARS))}
@@ -189,8 +188,8 @@ export default function App() {
           </div>
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#f8f8f9] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white">
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white w-full max-w-[460px]">
             <button
               onClick={() => text.trim() && setStep('tone')}
               className={`w-full h-12 rounded-xl text-[16px] font-semibold transition-colors ${
@@ -211,12 +210,12 @@ export default function App() {
       <div className="h-[100dvh] bg-white flex flex-col max-w-[460px] mx-auto">
         <AppBar showTooltip={showTooltip} onToggleTooltip={setShowTooltip} onLogoClick={handleReset} />
 
-        <div className="flex-1 flex flex-col gap-[52px] pt-6 pb-24 px-5 overflow-y-auto">
-          <div className="flex flex-col gap-1.5">
+        <div className="flex-1 flex flex-col gap-10 pt-6 pb-24 px-5 overflow-y-auto">
+          <div className="flex flex-col gap-[10px]">
             <h3 className="text-[26px] font-semibold leading-[34px] text-[#121212]">
               어떤 스타일로<br />다듬어 드릴까요?
             </h3>
-            <p className="text-[12px] font-medium leading-[16px] text-[#797d86]">
+            <p className="text-[14px] font-medium leading-[16px] text-[#797d86]">
               원하는 스타일로 문장을 다듬어 드릴게요
             </p>
           </div>
@@ -240,8 +239,8 @@ export default function App() {
           {error && <p className="text-[13px] text-[#ff3967]">{error}</p>}
         </div>
 
-        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#f8f8f9] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 flex gap-2 bg-white">
+        <div ref={ctaRef} className="fixed bottom-0 left-0 right-0 flex justify-center bg-[#EBECED] z-10" style={{ willChange: 'transform', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+          <div className="w-full max-w-[460px] px-5 pb-5 pt-3 bg-white flex gap-2">
             <button
               onClick={() => setStep('input')}
               className="h-12 px-6 border border-[#ff3967] rounded-xl text-[16px] font-semibold text-[#ff3967] transition-colors active:bg-[#fff0f3] shrink-0"
@@ -359,7 +358,7 @@ export default function App() {
 
           {/* 결과 카드 + 복사 버튼 */}
           <div className="flex flex-col gap-[10px]">
-            <div className="border border-[#e3e4e6] rounded-xl px-4 py-6 flex flex-col gap-6">
+            <div className="bg-white border border-[#e3e4e6] rounded-xl px-4 py-6 flex flex-col gap-6">
               <p className="text-[18px] font-medium leading-[26px] text-[#121212] whitespace-pre-wrap">
                 {result.refined}
               </p>
